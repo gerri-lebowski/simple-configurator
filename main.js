@@ -1,3 +1,7 @@
+let totalWidth = 0;
+let totalDepth = 0;
+let totalFlavors = 0;
+
 /**
  * Funzione per abilitare il drag & drop sull'elemento
  */
@@ -47,38 +51,60 @@ function makeDraggable(el) {
 }
 
 /**
- * Funzione per aggiungere un'immagine al canvas con posizionamento calcolato
+ * Funzione per aggiornare i totali
  */
-function addImageToCanvas(src) {
+function updateInfo() {
+  document.getElementById("totalWidth").textContent = totalWidth;
+  document.getElementById("totalDepth").textContent = totalDepth;
+  document.getElementById("totalFlavors").textContent = totalFlavors;
+}
+
+/**
+ * Funzione per aggiungere un'immagine al canvas con posizionamento corretto
+ */
+function addImageToCanvas(img) {
   const canvas = document.getElementById("canvas");
   const margin = 10;
-  const imageWidth = 80; // larghezza fissa
-  const imageHeight = 80; // altezza fissa
-  // Conta quante immagini sono già presenti nel canvas
+  const imageWidth = 80;
+  const imageHeight = 80;
+
+  // Conta immagini già presenti
   const currentImages = canvas.querySelectorAll("img.draggable");
   const imageCount = currentImages.length;
 
-  // Calcola la larghezza totale del gruppo se aggiungiamo una nuova immagine
-  const newGroupWidth = (imageCount + 1) * imageWidth + imageCount * margin;
-  // Calcola la posizione di partenza per centrare il gruppo
-  const canvasWidth = canvas.offsetWidth;
-  const canvasHeight = canvas.offsetHeight;
-  const groupStartLeft = (canvasWidth - newGroupWidth) / 2;
-
-  // Posiziona la nuova immagine accanto alle già presenti
-  const newImageLeft = groupStartLeft + imageCount * (imageWidth + margin);
-  const newImageTop = (canvasHeight - imageHeight) / 2;
+  // Posizionamento iniziale
+  const newImageLeft = imageCount * (imageWidth + margin);
+  const newImageTop = (canvas.offsetHeight - imageHeight) / 2;
 
   // Crea l'elemento immagine
   let newImg = document.createElement("img");
-  newImg.src = src;
-  newImg.alt = "Elemento configurato";
+  newImg.src = img.src;
   newImg.classList.add("draggable");
   newImg.style.left = newImageLeft + "px";
   newImg.style.top = newImageTop + "px";
 
-  // Rimuovi l'immagine con doppio click
+  // Attributi dati
+  newImg.dataset.width = img.dataset.width;
+  newImg.dataset.depth = img.dataset.depth;
+  newImg.dataset.flavors = img.dataset.flavors;
+
+  // Converti i valori in numeri prima di sommarli
+  let imgWidth = Number(img.dataset.width) || 0;
+  let imgDepth = Number(img.dataset.depth) || 0;
+  let imgFlavors = Number(img.dataset.flavors) || 0;
+
+  // Aggiorna totali
+  totalWidth += imgWidth;
+  totalDepth += imgDepth;
+  totalFlavors += imgFlavors;
+  updateInfo();
+
+  // Rimozione immagine su doppio clic
   newImg.addEventListener("dblclick", function () {
+    totalWidth -= imgWidth;
+    totalDepth -= imgDepth;
+    totalFlavors -= imgFlavors;
+    updateInfo();
     newImg.remove();
   });
 
@@ -87,10 +113,10 @@ function addImageToCanvas(src) {
 }
 
 /**
- * Aggiungi un event listener alle immagini della galleria
+ * Aggiungi event listener alle immagini della galleria
  */
-document.querySelectorAll("#gallery img").forEach(function (img) {
+document.querySelectorAll("#gallery img").forEach((img) => {
   img.addEventListener("click", function () {
-    addImageToCanvas(img.src);
+    addImageToCanvas(img);
   });
 });

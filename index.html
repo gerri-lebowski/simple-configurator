@@ -8,15 +8,29 @@
 </head>
 <body>
 
-  <!-- Canvas dove aggiungere le immagini -->
-  <div id="canvas"></div>
+  <header>
+    <div class="navbar">
+      <div class="logo"><img src="https://brxitalia.com/wp-content/uploads/BRX_Logo-03-1920x576.png" alt=""></div>
+      <button>Torna al sito</button>
+    </div>
+  </header>
+
+  <!-- Canvas + Info -->
+  <div id="container">
+    <div id="canvas"></div>
+    <div id="info">
+      <h3>Dettagli Configurazione</h3>
+      <p><strong>Larghezza totale:</strong> <span id="totalWidth">0</span> cm</p>
+      <p><strong>Profondità totale:</strong> <span id="totalDepth">0</span> cm</p>
+      <p><strong>Gusti selezionati:</strong> <span id="totalFlavors">0</span></p>
+    </div>
+  </div>
 
   <!-- Galleria di immagini -->
   <div id="gallery">
-    <img src="media/1.png" alt="Immagine 1">
-    <img src="media/2.png" alt="Immagine 2">
-    <img src="media/3.png" alt="Immagine 3">
-    <img src="media/3.png" alt="Immagine 3">
+    <img src="media/1.png" data-width="50" data-depth="40" data-flavors="6" alt="Immagine 1">
+    <img src="media/2.png" data-width="70" data-depth="50" data-flavors="12" alt="Immagine 2">
+    <img src="media/3.png" data-width="90" data-depth="60" data-flavors="17" alt="Immagine 3">
   </div>
 
   <script src="main.js"></script>
