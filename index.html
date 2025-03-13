@@ -1,40 +1,232 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Configuratore - Prototipo Aggiornato</title>
-  <link rel="stylesheet" href="main.css">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Configuratore - Prototipo Aggiornato</title>
 
-</head>
-<body>
+    <!-- CSS -->
+    <link rel="stylesheet" href="main.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <header>
-    <div class="navbar">
-      <div class="logo"><img src="https://brxitalia.com/wp-content/uploads/BRX_Logo-03-1920x576.png" alt=""></div>
-      <button>Torna al sito</button>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script type="module" src="/src/js/main.js" ></script>
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="logo">
+          <img
+            src="https://brxitalia.com/wp-content/uploads/BRX_Logo-03-1920x576.png"
+            alt=""
+          />
+        </div>
+        <button>Torna al sito</button>
+      </div>
+    </header>
+    <div id="container">
+      <h1>Configuratore BRX, benvenuto</h1>
     </div>
-  </header>
 
-  <!-- Canvas + Info -->
-  <div id="container">
-    <div id="canvas"></div>
-    <div id="info">
-      <h3>Dettagli Configurazione</h3>
-      <p><strong>Larghezza totale:</strong> <span id="totalWidth">0</span> cm</p>
-      <p><strong>Profondità totale:</strong> <span id="totalDepth">0</span> cm</p>
-      <p><strong>Gusti selezionati:</strong> <span id="totalFlavors">0</span></p>
+    
+    <!-- Canvas + Info -->
+    <div id="container">
+      <div id="canvas">
+      </div>
+      
+
+      <div id="info">
+        <h3>Dettagli Configurazione</h3>
+        <p>
+          <strong>Larghezza totale:</strong> <span id="totalWidth">0</span> cm
+        </p>
+        <p>
+          <strong>Profondità totale:</strong> <span id="totalDepth">0</span> cm
+        </p>
+        <p>
+          <strong>Gusti selezionati:</strong> <span id="totalFlavors">0</span>
+        </p>
+      </div>
     </div>
-  </div>
 
-  <!-- Galleria di immagini -->
-  <div id="gallery">
-    <img src="media/1.png" data-width="50" data-depth="40" data-flavors="6" alt="Immagine 1">
-    <img src="media/2.png" data-width="70" data-depth="50" data-flavors="12" alt="Immagine 2">
-    <img src="media/3.png" data-width="90" data-depth="60" data-flavors="17" alt="Immagine 3">
-  </div>
+    <!-- Galleria di immagini -->
+    <div id="gallery">
+      <div class="gallery-section">
+        <h4>2 File</h4>
+        <div class="images-row">
+          <div class="image-container">
+            <img
+              src="media/2-fila-2-banchi.png"
+              data-width="50"
+              data-depth="40"
+              data-flavors="12"
+              alt="2 file - Config 1"
+            />
+            <span class="image-caption">2 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/2-file-4-banchi.png"
+              data-width="70"
+              data-depth="50"
+              data-flavors="14"
+              alt="2 file - Config 2"
+            />
+            <span class="image-caption">4 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/2-fila-6-banchi.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="16"
+              alt="2 file - Config 3"
+            />
+            <span class="image-caption">6 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/2-fila-8-banchi.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="16"
+              alt="2 file - Config 3"
+            />
+            <span class="image-caption">8 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/2-fila-10-banchi.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="16"
+              alt="2 file - Config 3"
+            />
+            <span class="image-caption">10 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/2-fila-12-banchi.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="16"
+              alt="2 file - Config 3"
+            />
+            <span class="image-caption">12 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/2-fila-12-banchi-curvo-dx.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="16"
+              alt="2 file - Config 3"
+            />
+            <span class="image-caption">12 gusti, curvo</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/2-fila-12-banchi-curvo-sx.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="16"
+              alt="2 file - Config 3"
+            />
+            <span class="image-caption">12 gusti, curvo</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/2-fila-14-banchi.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="16"
+              alt="2 file - Config 3"
+            />
+            <span class="image-caption">14 gusti</span>
+          </div>
+        </div>
+      </div>
 
-  <script src="main.js"></script>
-</body>
+      <div class="gallery-section">
+        <h4>3 File</h4>
+        <div class="images-row">
+          <div class="image-container">
+            <img
+              src="media/3-fila-5-banchi.png"
+              data-width="50"
+              data-depth="40"
+              data-flavors="17"
+              alt="3 file - Config 1"
+            />
+            <span class="image-caption">5 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/3-fila-8-banchi.png"
+              data-width="70"
+              data-depth="50"
+              data-flavors="20"
+              alt="3 file - Config 2"
+            />
+            <span class="image-caption">8 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/3-fila-8-banchi-02.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="24"
+              alt="3 file - Config 3"
+            />
+            <span class="image-caption">8 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/3-fila-11-banchi.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="24"
+              alt="3 file - Config 3"
+            />
+            <span class="image-caption">11 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/3-fila-14-banchi.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="24"
+              alt="3 file - Config 3"
+            />
+            <span class="image-caption">14 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/3-fila-17-banchi.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="24"
+              alt="3 file - Config 3"
+            />
+            <span class="image-caption">17 gusti</span>
+          </div>
+          <div class="image-container">
+            <img
+              src="media/3-fila-20-banchi.png"
+              data-width="90"
+              data-depth="60"
+              data-flavors="24"
+              alt="3 file - Config 3"
+            />
+            <span class="image-caption">20 gusti</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

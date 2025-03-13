@@ -1,6 +1,6 @@
 /* Stili di base */
 body {
-  font-family: 'Open sans', sans-serif;
+  font-family: "Open sans", sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -20,6 +20,8 @@ body {
   border: 2px dashed #ccc;
   position: relative;
   background-color: #f9f9f9;
+  overflow: hidden;
+  perspective: 1000px;
 }
 
 /* Info box */
@@ -33,21 +35,58 @@ body {
 }
 
 /* Galleria */
+
 #gallery {
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
+  flex-direction: column;
+  gap: 2em;
+  padding: 20px;
   border-top: 1px solid #ddd;
   background-color: #eee;
 }
 
-/* Immagini della galleria */
+.gallery-section {
+  display: block;
+  margin-right: 0;
+  width: 100%;
+}
+
+.gallery-section h4 {
+  margin-bottom: 10px;
+  display: block;
+  text-align: left;
+}
+
+/* Stile per la riga di immagini */
+.images-row {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+/* Stile per il contenitore dell'immagine nella galleria */
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Stile per la didascalia nella galleria */
+.image-caption {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+}
+
+/* Stile per le immagini nella galleria */
 #gallery img {
-  width: 80px;
+  width: auto;
   height: 80px;
   cursor: pointer;
+  will-change: transform;
+  transform-origin: center;
   transition: transform 0.2s;
 }
 
@@ -55,15 +94,23 @@ body {
   transform: scale(1.1);
 }
 
-/* Immagini aggiunte al canvas */
+/* Le immagini draggabili tornano ad essere semplici */
 .draggable {
-  position: absolute;
-  cursor: move;
+  touch-action: none;
   user-select: none;
-  max-width: 150px;
+  position: absolute;
+  object-fit: contain;
+  cursor: move;
+  will-change: transform;
+  transform-origin: center;
+  box-shadow: none;
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
 }
 
-
+.draggable.snapping {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 2px #4caf50;
+}
 
 /* Altri stili */
 
@@ -73,10 +120,10 @@ body {
 }
 
 p {
-  font-size: .7rem;
+  font-size: 0.7rem;
 }
 
-.navbar{
+.navbar {
   background: #f8f8f8;
   display: flex;
   justify-content: space-between;
@@ -88,9 +135,15 @@ p {
 }
 
 button {
-  border: none; 
+  border: none;
   cursor: pointer;
-  background: #6DB757;
-  color: white; 
+  background: #6db757;
+  color: white;
   padding: 1em;
+}
+
+.canvas-message {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
