@@ -1,7 +1,15 @@
 import CONFIG from "./modules/config.js";
 import DraggableImage from "./modules/draggable.js";
 import ConfiguratorState from "./modules/state.js";
-import { updateInfo, addImageToCanvas, resetConfigurator } from "./modules/canvas.js";
+import {
+  updateInfo,
+  addImageToCanvas,
+  resetConfigurator,
+} from "./modules/canvas.js";
+import { FormHandler } from "./form-handler.js";
+
+// Initialize form handler
+const formHandler = new FormHandler();
 
 // Init function
 function init() {
@@ -18,8 +26,7 @@ function init() {
   // Per ogni immagine, creo un elemento draggable
   images.forEach((img) => {
     img.addEventListener("click", () => {
-      
-      // DraggableImage è responsabile della creazione e raccolta di tutti gli attributi 
+      // DraggableImage è responsabile della creazione e raccolta di tutti gli attributi
       const draggableImg = new DraggableImage(img, state);
 
       if (draggableImg.element) {
@@ -31,7 +38,6 @@ function init() {
             Number(img.dataset.depth),
             Number(img.dataset.flavors)
           );
-
         } else {
           console.error("Canvas element not found when trying to append image");
         }
@@ -39,7 +45,6 @@ function init() {
     });
 
     // Todo: Setup hover animation
-    
   });
 }
 

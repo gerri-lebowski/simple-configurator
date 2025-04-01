@@ -5,8 +5,8 @@ const CONFIG = {
     height: 120,
     margin: 15,
     initial: {
-      width: "auto",
-      height: 200,
+      width: 150,
+      height: 150,
     },
     limits: {
       min: 100,

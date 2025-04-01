@@ -2,16 +2,19 @@ import CONFIG from "./config.js";
 
 // Classe per gestire le immagini draggabili
 export default class DraggableImage {
-  
   constructor(sourceImg, state) {
     this.state = state;
     this.element = this.createImageElement(sourceImg);
     this.setupInteractions();
     this.setupAnimation();
+    this.currentRotation = 0;
     console.log("DraggableImage created", this.element);
   }
 
   createImageElement(sourceImg) {
+    const container = document.createElement("div");
+    container.className = "draggable-container";
+
     const img = document.createElement("img");
     const canvas = document.getElementById(CONFIG.canvas.id);
 
@@ -20,29 +23,42 @@ export default class DraggableImage {
       return null;
     }
 
-    const imageCount = canvas.querySelectorAll("img.draggable").length;
+    const imageCount = canvas.querySelectorAll(".draggable-container").length;
 
     // Setup iniziale dell'immagine
     img.src = sourceImg.src;
     img.className = "draggable";
-    
+
     // Copia tutti i data attributes
     Object.keys(sourceImg.dataset).forEach((key) => {
-      img.dataset[key] = sourceImg.dataset[key];
+      container.dataset[key] = sourceImg.dataset[key];
     });
 
     // Impostiamo stili iniziali direttamente
-    img.style.position = "absolute";
-    img.style.width = `${CONFIG.image.initial.width}px`;
-    img.style.height = `${CONFIG.image.initial.height}px`;
-    img.style.left = `${
+    container.style.width = `${CONFIG.image.initial.width}px`;
+    container.style.height = `${CONFIG.image.initial.height}px`;
+    container.style.left = `${
       imageCount * (CONFIG.image.initial.width + CONFIG.image.initial.margin)
     }px`;
-    img.style.top = `${
+    container.style.top = `${
       (canvas.offsetHeight - CONFIG.image.initial.height) / 2
     }px`;
 
-    return img;
+    // Creiamo il pulsante di rotazione
+    const rotateButton = document.createElement("button");
+    rotateButton.className = "rotate-button";
+    rotateButton.innerHTML = "↻";
+    rotateButton.title = "Ruota immagine";
+    rotateButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.rotate();
+    });
+
+    // Aggiungiamo gli elementi al container
+    container.appendChild(img);
+    container.appendChild(rotateButton);
+
+    return container;
   }
 
   setupInteractions() {
@@ -55,6 +71,8 @@ export default class DraggableImage {
           interact.modifiers.restrictRect({
             restriction: "parent",
             endOnly: true,
+            x: true,
+            y: true,
           }),
         ],
         listeners: {
@@ -106,13 +124,6 @@ export default class DraggableImage {
     let newX = position.x + event.dx;
     let newY = position.y + event.dy;
 
-    const canvas = document.getElementById(CONFIG.canvas.id);
-    const canvasRect = canvas.getBoundingClientRect();
-    const elementRect = this.element.getBoundingClientRect();
-
-    newX = Math.max(0, Math.min(newX, canvasRect.width - elementRect.width));
-    newY = Math.max(0, Math.min(newY, canvasRect.height - elementRect.height));
-
     this.element.style.left = `${newX}px`;
     this.element.style.top = `${newY}px`;
   }
@@ -125,9 +136,9 @@ export default class DraggableImage {
     const canvasRect = canvas.getBoundingClientRect();
 
     // Mantiene il rapporto d'aspetto originale
-    const originalWidth = this.element.naturalWidth || this.element.offsetWidth;
-    const originalHeight =
-      this.element.naturalHeight || this.element.offsetHeight;
+    const img = this.element.querySelector("img");
+    const originalWidth = img.naturalWidth || img.offsetWidth;
+    const originalHeight = img.naturalHeight || img.offsetHeight;
     const aspectRatio = originalWidth / originalHeight;
 
     // Calcola la nuova larghezza in base alla nuova altezza
@@ -153,16 +164,17 @@ export default class DraggableImage {
     }
   }
 
+  rotate() {
+    this.currentRotation = (this.currentRotation + 90) % 360;
+    const img = this.element.querySelector("img");
+    img.style.transform = `rotate(${this.currentRotation}deg)`;
+  }
+
   remove() {
     if (!this.element) return;
 
-    const { width, depth, flavors } = this.element.dataset;
-    this.state.update(
-      Number(width),
-      Number(depth),
-      Number(flavors),
-      "subtract"
-    );
+    const { width, flavors } = this.element.dataset;
+    this.state.update(Number(width), 0, Number(flavors), "subtract");
 
     gsap.to(this.element, {
       scale: 0,
