@@ -6,6 +6,9 @@ export class FormHandler {
     this.closeBtn = document.querySelector(".close");
     this.completeConfigBtn = document.getElementById("completeConfigBtn");
 
+    // Inizializza EmailJS
+    emailjs.init("2J-leznCbJe6N67EJ");
+
     this.initializeEventListeners();
   }
 
@@ -43,28 +46,44 @@ export class FormHandler {
       phone: document.getElementById("phone").value,
       company: document.getElementById("company").value,
       message: document.getElementById("message").value,
-      timestamp: new Date().toISOString(),
       configuration: {
         totalWidth: document.getElementById("totalWidth").textContent,
-        totalDepth: document.getElementById("totalDepth").textContent,
         totalFlavors: document.getElementById("totalFlavors").textContent,
       },
     };
 
-    // Save to localStorage
-    this.saveToLocalStorage(formData);
-
     try {
-      // Here you would implement the email sending logic
-      // For now, we'll just show a success message
-      alert("Configurazione salvata con successo!");
+      // Mostra un messaggio di caricamento
+      const submitButton = this.form.querySelector('button[type="submit"]');
+      const originalText = submitButton.textContent;
+      submitButton.textContent = "Invio in corso...";
+      submitButton.disabled = true;
+
+      // Invia l'email usando EmailJS
+      await emailjs.send("service_gkefhak", "template_scrrj8d", {
+        to_name: formData.name,
+        to_email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        message: formData.message,
+        configuration: `Larghezza totale: ${formData.configuration.totalWidth}cm\nGusti selezionati: ${formData.configuration.totalFlavors}`,
+      });
+
+      // Salva in localStorage
+      this.saveToLocalStorage(formData);
+
+      // Mostra messaggio di successo
+      alert("Configurazione inviata con successo!");
       this.closeModal();
       this.form.reset();
     } catch (error) {
-      console.error("Errore durante il salvataggio:", error);
-      alert(
-        "Si è verificato un errore durante il salvataggio. Riprova più tardi."
-      );
+      console.error("Errore durante l'invio:", error);
+      alert("Si è verificato un errore durante l'invio. Riprova più tardi.");
+    } finally {
+      // Ripristina il pulsante
+      const submitButton = this.form.querySelector('button[type="submit"]');
+      submitButton.textContent = "Invia Configurazione";
+      submitButton.disabled = false;
     }
   }
 
